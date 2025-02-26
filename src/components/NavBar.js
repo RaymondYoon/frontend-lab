@@ -9,7 +9,7 @@ const NavBar = () => {
     const fetchUserInfo = async () => {
       try {
         const response = await api.get("/auth/userinfo");
-        setNickname(response.data.nickname); // 닉네임 설정
+        setNickname(response.data.nickname); // ✅ 닉네임 설정
       } catch (error) {
         console.error("사용자 정보를 불러오지 못했습니다.", error);
       }
@@ -21,9 +21,9 @@ const NavBar = () => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // 토큰 삭제
-    setNickname(""); // 닉네임 초기화
-    window.location.reload(); // 새로고침
+    localStorage.removeItem("token"); // ✅ 토큰 삭제
+    setNickname(""); // ✅ 닉네임 초기화
+    window.location.reload(); // ✅ 새로고침
   };
 
   return (
