@@ -1,13 +1,19 @@
-import React from "react";
+// src/App.js
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Post from "./pages/Post";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import CreatePostPage from "./pages/CreatePostPage";
-import "./styles/App.css"; // ✅ 전체 스타일 적용
+import { initFireworks } from "./utils/fireworks"; // 🎇 추가
+import "./styles/App.css";
 
 function App() {
+  useEffect(() => {
+    initFireworks(); // 앱이 실행될 때 한 번만 호출
+  }, []);
+
   return (
     <Router>
       <div className="app-container">
