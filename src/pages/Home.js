@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api/api";
-import CreatePost from "../components/CreatePost";
+import "../styles/Home.css"; // ✅ 스타일 적용
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [nickname, setNickname] = useState("");
 
   useEffect(() => {
-    // 게시글 목록 불러오기
     api.get("/posts")
       .then(response => setPosts(response.data))
       .catch(error => console.error("게시글을 불러오지 못했습니다.", error));
 
-    // 로그인한 사용자 정보 불러오기
     const fetchUser = async () => {
       try {
         const response = await api.get("/auth/userinfo");
@@ -28,38 +26,48 @@ const Home = () => {
     }
   }, []);
 
-  // ✅ 게시글 추가 함수 정의
-  const addPost = async (newPost) => {
-    try {
-      const response = await api.post("/posts", newPost);
-      setPosts(prevPosts => [response.data, ...prevPosts]); // 새 게시글 추가
-    } catch (error) {
-      console.error("게시글 추가 실패:", error);
-    }
-  };
-
   return (
-    <div>
-      <h1>게시판</h1>
-      {nickname && <h2>안녕하세요, {nickname}님!</h2>}
+    <div className="container">
+      <aside className="left-sidebar"></aside>
 
-      {/* ✅ addPost를 CreatePost에 전달 */}
-      <CreatePost addPost={addPost} />
+      <main className="main-content">
+        <h1 className="board-title">게시판</h1>
+        <Link to="/create-post" className="create-post-button">새 게시글 작성</Link>
+        
+        <div className="posts-container">
+          {posts.length > 0 ? (
+            posts.map(post => (
+              <div key={post.id} className="post-item">
+                <h2>
+                  <Link to={`/post/${post.id}`} className="post-title">{post.title}</Link>
+                </h2>
+                <p>{post.content.substring(0, 100)}...</p>
+              </div>
+            ))
+          ) : (
+            <p>게시글이 없습니다.</p>
+          )}
+        </div>
+      </main>
 
-      <div>
-        {posts.length > 0 ? (
-          posts.map(post => (
-            <div key={post.id}>
-              <h2>
-                <Link to={`/post/${post.id}`}>{post.title}</Link>
-              </h2>
-              <p>{post.content.substring(0, 100)}...</p>
-            </div>
-          ))
+      <aside className="login-box">
+        {nickname ? (
+          <>
+            <p className="welcome-text">안녕하세요, {nickname}님!</p>
+            <button onClick={() => {
+              localStorage.removeItem("token");
+              setNickname("");
+              window.location.reload();
+            }} className="logout-button">로그아웃</button>
+          </>
         ) : (
-          <p>게시글이 없습니다.</p>
+          <>
+            <h2 className="login-title">로그인</h2>
+            <Link to="/login" className="login-button">로그인</Link>
+            <Link to="/signup" className="signup-button">회원가입</Link>
+          </>
         )}
-      </div>
+      </aside>
     </div>
   );
 };

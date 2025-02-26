@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../styles/Auth.css"; // 스타일 적용
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -30,9 +31,9 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <h2>회원가입</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="auth-container">
+      <h2 className="auth-title">회원가입</h2>
+      <form className="auth-form" onSubmit={handleSubmit}>
         <input type="email" name="email" placeholder="이메일" value={formData.email} onChange={handleChange} required />
         <input type="password" name="password" placeholder="비밀번호" value={formData.password} onChange={handleChange} required />
         <input type="text" name="nickname" placeholder="닉네임" value={formData.nickname} onChange={handleChange} required />
@@ -42,7 +43,7 @@ const Signup = () => {
           <option value="FEMALE">여성</option>
         </select>
         <input type="text" name="phoneNumber" placeholder="전화번호" value={formData.phoneNumber} onChange={handleChange} required />
-        <button type="submit">회원가입</button>
+        <button type="submit" className="auth-button">회원가입</button>
       </form>
     </div>
   );
