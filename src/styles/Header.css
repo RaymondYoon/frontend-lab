@@ -1,0 +1,82 @@
+/* 기본 헤더 스타일 */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* 다크 모드 스타일 */
+  .dark-mode {
+    background: #1e1e1e;
+    color: white;
+  }
+  
+  .dark-mode .header {
+    background: #2d2d2d;
+    box-shadow: none;
+  }
+  
+  /* 왼쪽 부분 */
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .home-button {
+    font-size: 24px;
+    font-weight: bold;
+    color: gold;
+    text-decoration: none;
+    padding: 5px 10px;
+  }
+  
+  .nickname {
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  /* 오른쪽 버튼 스타일 */
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .auth-btn, .logout-btn {
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+  }
+  
+  .auth-btn {
+    background: #4caf50;
+    color: white;
+    text-decoration: none;
+  }
+  
+  .logout-btn {
+    background: #d9534f;
+    color: white;
+  }
+  
+  .dark-mode-btn {
+    font-size: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .dark-mode .auth-btn {
+    background: #6dc36d;
+  }
+  
+  .dark-mode .logout-btn {
+    background: #ff6666;
+  }
+  

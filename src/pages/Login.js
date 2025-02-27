@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
-import "../styles/Auth.css"; // 스타일 적용
+import "../styles/Auth.css";
 
-const Login = () => {
+const Login = ({ setNickname }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
 
@@ -15,8 +15,15 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await api.post("/auth/login", formData);
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", response.data.token); // ✅ 토큰 저장
       alert("로그인 성공!");
+
+      // ✅ 로그인 후 사용자 정보 가져오기
+      const userResponse = await api.get("/auth/userinfo", {
+        headers: { Authorization: `Bearer ${response.data.token}` }
+      });
+
+      setNickname(userResponse.data.nickname); // ✅ 상태 즉시 업데이트
       navigate("/");
     } catch (error) {
       alert("로그인 실패: " + (error.response?.data?.message || "오류 발생"));

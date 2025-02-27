@@ -1,7 +1,71 @@
+/* ✅ 전체 앱 컨테이너 */
 .app-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f0f8ea;
-  min-height: 100vh;
+  background-color: #ffffff;
+  color: #000000;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* ✅ 다크 모드 적용 */
+.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+/* ✅ 헤더 스타일 */
+.header {
+  background-color: white;
+  color: black;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* ✅ 다크 모드 헤더 */
+.dark-mode .header {
+  background-color: #1e1e1e;
+  color: white;
+}
+
+/* ✅ 버튼 스타일 */
+.auth-btn, .logout-btn {
+  background: #4caf50;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.logout-btn {
+  background: #d9534f;
+  color: white;
+}
+
+.dark-mode .auth-btn {
+  background: #6dc36d;
+}
+
+.dark-mode .logout-btn {
+  background: #ff6666;
+}
+
+/* ✅ 게시글 리스트 */
+.post-item {
+  background-color: white;
+  color: black;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* ✅ 다크 모드 게시글 */
+.dark-mode .post-item {
+  background-color: #2d2d2d;
+  color: white;
+}
+
+/* ✅ 다크 모드 푸터 */
+.footer {
+  background-color: #f5f5f5;
+  color: #333;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dark-mode .footer {
+  background-color: #1e1e1e;
+  color: #bbb;
 }

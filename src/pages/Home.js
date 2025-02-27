@@ -1,29 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api/api";
-import "../styles/Home.css"; // ✅ 스타일 적용
+import "../styles/Home.css";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
-  const [nickname, setNickname] = useState("");
 
   useEffect(() => {
     api.get("/posts")
       .then(response => setPosts(response.data))
       .catch(error => console.error("게시글을 불러오지 못했습니다.", error));
-
-    const fetchUser = async () => {
-      try {
-        const response = await api.get("/auth/userinfo");
-        setNickname(response.data.nickname);
-      } catch (error) {
-        console.error("사용자 정보를 불러오지 못했습니다.", error);
-      }
-    };
-
-    if (localStorage.getItem("token")) {
-      fetchUser();
-    }
   }, []);
 
   return (
@@ -50,30 +36,9 @@ const Home = () => {
             )}
           </div>
         </main>
-
-        <aside className="right-sidebar">
-          <div className="login-box">
-            {nickname ? (
-              <>
-                <p className="welcome-text">안녕하세요, {nickname}님!</p>
-                <button onClick={() => {
-                  localStorage.removeItem("token");
-                  setNickname("");
-                  window.location.reload();
-                }} className="logout-button">로그아웃</button>
-              </>
-            ) : (
-              <>
-                <h2 className="login-title">로그인</h2>
-                <Link to="/login" className="login-button">로그인</Link>
-                <Link to="/signup" className="signup-button">회원가입</Link>
-              </>
-            )}
-          </div>
-        </aside>
       </div>
 
-      {/* ✅ 푸터 추가 */}
+      {/* ✅ 푸터 유지 */}
       <footer className="footer">
         <p>LAB | 이용약관 | 개인정보처리방침 | 서비스 운영정책</p>
         <p>Copyright © LAB Corp. All Rights Reserved.</p>
