@@ -8,12 +8,18 @@ const Post = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/posts/${id}`)
+    const token = localStorage.getItem('token');
+
+    axios.get(`http://localhost:8080/posts/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then(response => {
         setPost(response.data);
       })
       .catch(() => {
-        setError('게시글을 불러오는 데 실패했습니다.');
+        setError('게시글을 불러오는데 실패했습니다.');
       });
   }, [id]);
 
@@ -23,7 +29,7 @@ const Post = () => {
   return (
     <div className="post-details">
       <h1>
-        {post.title} <span style={{ fontSize: '1rem', color: 'gray' }}>({post.nickname})</span>
+        {post.title} <span style={{ fontSize: '1rem', color: 'white' }}>({post.nickname})</span>
       </h1>
       <p>{post.content}</p>
     </div>
