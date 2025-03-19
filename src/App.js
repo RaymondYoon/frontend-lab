@@ -6,6 +6,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import CreatePostPage from "./pages/CreatePostPage";
 import Header from "./components/Header";
+import PaymentSuccess from "./pages/PaymentSuccess";
 import { initFireworks } from "./utils/fireworks"; 
 import "./styles/App.css";
 
@@ -59,6 +60,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login setNickname={setNickname} />} />
           <Route path="/create-post" element={<CreatePostPage />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
         </Routes>
       </div>
     </Router>
