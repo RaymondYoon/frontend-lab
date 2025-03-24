@@ -23,8 +23,12 @@ const Home = () => {
   }, []);
 
   const fetchPosts = () => {
+    const token = localStorage.getItem("token");
     axios
-      .get("http://localhost:8080/posts")
+      .get("http://localhost:8080/posts",
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => setPosts(response.data))
       .catch((error) => console.error("게시글을 불러오지 못했습니다.", error));
   };
@@ -43,27 +47,27 @@ const Home = () => {
         }
       )
       .then((response) => {
-        console.log("✅ 결제 API 응답:", response.data); // 응답 확인
+        console.log("결제 API 응답:", response.data); // 응답 확인
 
         const { tid, next_redirect_pc_url } = response.data; // 백엔드 응답 구조 확인 후 정확한 키 사용
 
         if (!next_redirect_pc_url || !tid) {
-          console.error("❌ 응답 오류:", response.data);
+          console.error("응답 오류:", response.data);
           alert("결제 URL 또는 거래 ID가 없습니다.");
           return;
         }
 
-        // ✅ tid 저장
+        // tid 저장
         localStorage.setItem("tid", tid);
 
-        // ✅ 결제창 열기
+        // 결제창 열기
         window.open(next_redirect_pc_url, "_blank");
 
-        // ✅ 일정 시간 후 게시글 상태 업데이트
+        // 일정 시간 후 게시글 상태 업데이트
         setTimeout(fetchPosts, 5000);
       })
       .catch((error) => {
-        console.error("❌ 결제 요청 실패:", error.response ? error.response.data : error);
+        console.error("결제 요청 실패:", error.response ? error.response.data : error);
         alert("결제 요청에 실패했습니다.");
       });
 };
@@ -92,7 +96,7 @@ const Home = () => {
                   </h2>
                   <p>{post.content.substring(0, 100)}...</p>
 
-                  {userId && userId !== post.userId && !post.paid && (
+                  {userId && userId !== post.userId && !post.paidByUser && (
                     <button onClick={() => handlePayment(post.id)} className="pay-button">
                       결제하기
                     </button>
