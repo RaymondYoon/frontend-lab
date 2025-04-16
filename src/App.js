@@ -8,6 +8,8 @@ import CreatePostPage from "./pages/CreatePostPage";
 import Header from "./components/Header";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import { initFireworks } from "./utils/fireworks"; 
+import ChatListPage from "./pages/ChatListPage";
+import ChatRoomPage from "./pages/ChatRoomPage";
 import "./styles/App.css";
 
 function App() {
@@ -61,6 +63,8 @@ function App() {
           <Route path="/login" element={<Login setNickname={setNickname} />} />
           <Route path="/create-post" element={<CreatePostPage />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
+          <Route path="/chat-list" element={<ChatListPage />} />
+          <Route path="/chat/room/:roomId" element={<ChatRoomPage />} />
         </Routes>
       </div>
     </Router>
