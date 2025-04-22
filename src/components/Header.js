@@ -19,7 +19,10 @@ const Header = ({ nickname, setNickname, toggleDarkMode, isDarkMode }) => {
           {isDarkMode ? "☀️" : "🌙"}
         </button>
         {nickname ? (
+          <>
+          <Link to="/chat-list" className="auth-btn">채팅목록</Link>
           <button className="logout-btn" onClick={handleLogout}>로그아웃</button>
+          </>
         ) : (
           <>
             <Link to="/login" className="auth-btn">로그인</Link>
