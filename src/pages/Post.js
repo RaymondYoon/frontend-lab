@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate  } from 'react-router-dom';
 import axios from 'axios';
 
 const Post = () => {
@@ -10,6 +10,7 @@ const Post = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+    console.log("보내는 토큰:", token);
 
     axios.get(`http://localhost:8080/posts/${id}`, {
       headers: {
