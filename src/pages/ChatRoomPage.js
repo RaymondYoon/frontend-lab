@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import SockJS from "sockjs-client";
-import { over } from "stompjs";
+import { Client } from "@stomp/stompjs";
 import api from "../api/api";
 
 let stompClient = null;
@@ -14,38 +14,52 @@ const ChatRoomPage = () => {
   const messageEndRef = useRef();
 
   useEffect(() => {
+    // 사용자 닉네임 가져오기
     api.get("/auth/userinfo").then(res => setNickname(res.data.nickname));
+
+    // 채팅 메시지 불러오기
     api.get(`/chat/room/${roomId}/messages`)
       .then(res => setMessages(res.data))
       .catch(err => console.error(err));
 
+    // WebSocket 연결
     connectSocket();
 
+    // 언마운트 시 연결 종료
     return () => {
-      if (stompClient) stompClient.disconnect();
+      if (stompClient) stompClient.deactivate();
     };
   }, []);
 
   const connectSocket = () => {
     const token = localStorage.getItem("token");
     const socket = new SockJS(`http://localhost:8080/ws-chat?token=${token}`);
-    stompClient = over(socket);
-    stompClient.connect({}, () => {
-      stompClient.subscribe("/topic/chat", (message) => {
-        const msg = JSON.parse(message.body);
-        if (msg.roomId.toString() === roomId.toString()) {
-          setMessages(prev => [...prev, msg]);
-        }
-      });
+
+    stompClient = new Client({
+      webSocketFactory: () => socket,
+      onConnect: () => {
+        stompClient.subscribe("/topic/chat", (message) => {
+          const msg = JSON.parse(message.body);
+          if (msg.roomId.toString() === roomId.toString()) {
+            setMessages(prev => [...prev, msg]);
+          }
+        });
+      },
+      debug: (str) => console.log("[STOMP DEBUG]", str),
     });
+
+    stompClient.activate();
   };
 
   const sendMessage = () => {
     if (!inputMsg.trim()) return;
-    stompClient.send("/app/chat/message", {}, JSON.stringify({
-      roomId: roomId,
-      message: inputMsg
-    }));
+    stompClient.publish({
+      destination: "/app/chat/message",
+      body: JSON.stringify({
+        roomId: roomId,
+        message: inputMsg
+      }),
+    });
     setInputMsg("");
   };
 
