@@ -21,6 +21,7 @@ const Header = ({ nickname, setNickname, toggleDarkMode, isDarkMode }) => {
         {nickname ? (
           <>
           <Link to="/chat-list" className="auth-btn">채팅목록</Link>
+          <Link to="/chatbot" className="auth-btn">챗봇</Link>
           <button className="logout-btn" onClick={handleLogout}>로그아웃</button>
           </>
         ) : (
