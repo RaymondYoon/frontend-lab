@@ -7,6 +7,7 @@ const Post = () => {
   const [post, setPost] = useState(null);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     const token = localStorage.getItem('token');
