@@ -10,6 +10,7 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 import { initFireworks } from "./utils/fireworks"; 
 import ChatListPage from "./pages/ChatListPage";
 import ChatRoomPage from "./pages/ChatRoomPage";
+import ChatbotPage from "./pages/ChatbotPage";
 import "./styles/App.css";
 
 function App() {
@@ -65,6 +66,7 @@ function App() {
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/chat-list" element={<ChatListPage />} />
           <Route path="/chat/room/:roomId" element={<ChatRoomPage />} />
+          <Route path="/chatbot" element={<ChatbotPage />} />
         </Routes>
       </div>
     </Router>
